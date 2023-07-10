@@ -13,9 +13,9 @@ export class Comment {
   @Column()
   description: string;
 
-  @ManyToOne((type) => User, (user) => user.comments)
+  @ManyToOne(() => User, (user) => user.comments)
   user: User;
 
-  @ManyToOne((type) => Task, (task) => task.comments, { eager: true })
+  @ManyToOne(() => Task, (task) => task.comments, { eager: true })
   task: Task;
 }

@@ -28,9 +28,9 @@ export class User {
   password: string;
 
   @ApiProperty()
-  @OneToMany((type) => Comment, (comment) => comment.user)
+  @OneToMany(() => Comment, (comment) => comment.user)
   comments: Comment[];
 
-  @OneToMany((type) => Task, (task) => task.user)
+  @OneToMany(() => Task, (task) => task.user)
   tasks: Task[];
 }
