@@ -1,9 +1,10 @@
-import {Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe} from "@nestjs/common";
+import {Controller, Get, Post, Body, Patch, Param, Delete, ParseIntPipe, UseInterceptors} from "@nestjs/common";
 import { CommentsService } from "./comments.service";
 import { CreateCommentDto } from "./dto/create-comment.dto";
 import { UpdateCommentDto } from "./dto/update-comment.dto";
 import { ApiTags, ApiResponse, ApiBearerAuth } from "@nestjs/swagger";
 import { Comment } from "./entities/comment.entity";
+import {LoggingInterceptor} from "../interceptors/logging.interceptor";
 
 @ApiTags("Comments")
 @ApiBearerAuth()
@@ -28,6 +29,7 @@ export class CommentsController {
   }
 
   @Get(":id")
+  @UseInterceptors(LoggingInterceptor)
   findOne(@Param("id", ParseIntPipe) id: string): Promise<Comment> {
     return this.commentsService.findOne(+id);
   }
