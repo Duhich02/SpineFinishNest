@@ -7,27 +7,25 @@ import { Repository } from "typeorm";
 
 @Injectable()
 export class CommentsService {
-  constructor(
-    @InjectRepository(Comment) private repository: Repository<Comment>
-  ) {}
+  constructor(@InjectRepository(Comment) private repository: Repository<Comment>) {}
 
-  create(createCommentDto: CreateCommentDto) {
+  create(createCommentDto: CreateCommentDto): Promise<CreateCommentDto & Comment> {
     return this.repository.save(createCommentDto);
   }
 
-  findAll() {
+  findAll(): Promise<Comment[]> {
     return this.repository.find();
   }
 
-  findOne(id: number) {
+  findOne(id: number): Promise<Comment> {
     return this.repository.findOneBy({ id });
   }
 
-  update(id: number, updateCommentDto: UpdateCommentDto) {
+  update(id: number, updateCommentDto: UpdateCommentDto): Promise<UpdateCommentDto & Comment> {
     return this.repository.save({ ...updateCommentDto, id });
   }
 
-  async remove(id: number) {
+  async remove(id: number): Promise<void> {
     await this.repository.delete(id);
   }
 }
